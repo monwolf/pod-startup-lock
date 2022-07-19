@@ -6,12 +6,13 @@
 package service
 
 import (
-	"github.com/serhii-samoilenko/pod-startup-lock/lock/state"
 	"log"
 	"net/http"
 	"net/url"
 	"strconv"
 	"time"
+
+	"github.com/monwolf/pod-startup-lock/lock/state"
 )
 
 type lockHandler struct {

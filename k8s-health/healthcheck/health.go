@@ -7,13 +7,14 @@ package healthcheck
 
 import (
 	"fmt"
-	"github.com/serhii-samoilenko/pod-startup-lock/common/util"
-	"github.com/serhii-samoilenko/pod-startup-lock/k8s-health/config"
-	"github.com/serhii-samoilenko/pod-startup-lock/k8s-health/k8s"
-	"k8s.io/api/core/v1"
-	"k8s.io/api/extensions/v1beta1"
 	"log"
 	"time"
+
+	"github.com/monwolf/pod-startup-lock/common/util"
+	"github.com/monwolf/pod-startup-lock/k8s-health/config"
+	"github.com/monwolf/pod-startup-lock/k8s-health/k8s"
+	v1 "k8s.io/api/core/v1"
+	"k8s.io/api/extensions/v1beta1"
 )
 
 type HealthChecker struct {

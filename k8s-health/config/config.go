@@ -7,10 +7,11 @@ package config
 
 import (
 	"flag"
-	. "github.com/serhii-samoilenko/pod-startup-lock/common/util"
 	"log"
 	"os"
 	"time"
+
+	. "github.com/monwolf/pod-startup-lock/common/util"
 )
 
 const defaultPort = 9999

@@ -6,11 +6,12 @@
 package service
 
 import (
-	"github.com/serhii-samoilenko/pod-startup-lock/lock/state"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 	"time"
+
+	"github.com/monwolf/pod-startup-lock/lock/state"
 )
 
 var timeout = time.Duration(10) * time.Second

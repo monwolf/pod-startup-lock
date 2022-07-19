@@ -1,4 +1,4 @@
-module github.com/serhii-samoilenko/pod-startup-lock
+module github.com/monwolf/pod-startup-lock
 
 go 1.17
 

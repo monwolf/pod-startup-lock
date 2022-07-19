@@ -6,13 +6,14 @@
 package service
 
 import (
-	. "github.com/serhii-samoilenko/pod-startup-lock/lock/config"
+	"io"
+	"io/ioutil"
 	"log"
 	"net"
 	"net/http"
 	"time"
-	"io"
-	"io/ioutil"
+
+	. "github.com/monwolf/pod-startup-lock/lock/config"
 )
 
 const maxIdleConnections = 10
