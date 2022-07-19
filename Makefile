@@ -1,5 +1,5 @@
 
-.DEFAULT_GOAL := build
+.DEFAULT_GOAL := docker-build-full
 
 linux:
 	@echo ">>> Make: Setting GO target OS to 'linux'"
@@ -43,3 +43,26 @@ docker-push-latest:
 	$(MAKE) -C k8s-health docker-push-latest
 	$(MAKE) -C init docker-push-latest
 	$(MAKE) -C lock docker-push-latest
+
+
+# App version for docker build
+ver = version.info
+include $(ver)
+export $(shell sed 's/=.*//' $(ver))
+
+# App info for docker build
+app = app.info
+include $(app)
+export $(shell sed 's/=.*//' $(app))
+
+docker-build-full:
+	@echo ">>> Make: build docker images from docker builder"
+	docker build -t $(DOCKER_USER)/$(DOCKER_NAME_INIT):$(APP_VERSION) --target=init .
+	docker build -t $(DOCKER_USER)/$(DOCKER_NAME_HEALTH):$(APP_VERSION) --target=k8s-health .
+	docker build -t $(DOCKER_USER)/$(DOCKER_NAME_LOCK):$(APP_VERSION) --target=lock .
+
+docker-push: docker-build-full
+	@echo ">>> Make: Pushing all docker images"
+	docker push -t $(DOCKER_USER)/$(DOCKER_NAME_INIT):$(APP_VERSION) 
+	docker push -t $(DOCKER_USER)/$(DOCKER_NAME_HEALTH):$(APP_VERSION)
+	docker push -t $(DOCKER_USER)/$(DOCKER_NAME_LOCK):$(APP_VERSION)

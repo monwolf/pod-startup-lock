@@ -1,0 +1,6 @@
+APP_NAME_HEALTH=health
+DOCKER_NAME_HEALTH=startup-lock-k8s-health
+APP_NAME_INIT=init
+DOCKER_NAME_INIT=startup-lock-init
+APP_NAME_LOCK=lock
+DOCKER_NAME_LOCK=startup-lock

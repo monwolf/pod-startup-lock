@@ -89,6 +89,15 @@ Then run Make:
 make docker-push
 ```
 
+#### 6. Or Build Docker from a docker build
+First, you need to specify Docker user name as a variable: `DOCKER_USER`.
+
+Then run Make:
+```bash
+make docker-build-full
+```
+
+
 ## Release Notes
 * `1.0.1`
     - Added connection timeouts for http and tcp connections; Added keep-alive for http connections. 
