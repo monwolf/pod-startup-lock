@@ -60,9 +60,12 @@ docker-build-full:
 	docker build -t $(DOCKER_USER)/$(DOCKER_NAME):$(DOCKER_NAME_INIT)-$(APP_VERSION) --target=init .
 	docker build -t $(DOCKER_USER)/$(DOCKER_NAME):$(DOCKER_NAME_HEALTH)-$(APP_VERSION) --target=k8s-health .
 	docker build -t $(DOCKER_USER)/$(DOCKER_NAME):$(DOCKER_NAME_LOCK)-$(APP_VERSION) --target=lock .
+	docker build -t $(DOCKER_USER)/$(DOCKER_NAME):$(DOCKER_NAME_HASHI)-$(APP_VERSION) --target=hashi-health .
+
 
 docker-push: docker-build-full
 	@echo ">>> Make: Pushing all docker images"
 	docker push $(DOCKER_USER)/$(DOCKER_NAME):$(DOCKER_NAME_INIT)-$(APP_VERSION) 
 	docker push $(DOCKER_USER)/$(DOCKER_NAME):$(DOCKER_NAME_HEALTH)-$(APP_VERSION)
 	docker push $(DOCKER_USER)/$(DOCKER_NAME):$(DOCKER_NAME_LOCK)-$(APP_VERSION)
+	docker push $(DOCKER_USER)/$(DOCKER_NAME):$(DOCKER_NAME_HASHI)-$(APP_VERSION)

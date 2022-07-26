@@ -6,6 +6,9 @@ COPY . .
 RUN cd init &&	go build -a -o bin/init && cd ..
 RUN cd k8s-health && go test -cover -v ./... &&	go build -a -o bin/k8s-health && cd ..
 RUN cd lock && go test -cover -v ./... &&	go build -a -o bin/lock && cd ..
+RUN cd hashi-health && go test -cover -v ./... &&	go build -a -o bin/hashi-health && cd ..
+
+
 
 FROM scratch as init
 WORKDIR /
@@ -21,3 +24,8 @@ FROM scratch as lock
 WORKDIR /
 COPY --from=builder /go/src/github.com/monwolf/pod-startup-lock/lock/bin/lock /lock
 ENTRYPOINT ["./lock"]
+
+FROM scratch as hashi-health
+WORKDIR /
+COPY --from=builder /go/src/github.com/monwolf/pod-startup-lock/hashi-health/bin/hashi-health /hashi-health
+ENTRYPOINT ["./hashi-health"]
