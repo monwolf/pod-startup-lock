@@ -34,8 +34,7 @@ func (i *arrayFlags) Set(value string) error {
 func Parse() Config {
 	host := flag.String("host", "", "Host/Ip to bind")
 	port := flag.Int("port", defaultPort, "Port to bind")
-	baseUrl := flag.String("baseUrl", "", "K8s api base url. For out-of-cluster usage only")
-	namespace := flag.String("namespace", "", "K8s Namespace to check DaemonSets in. Blank for all namespaces")
+	namespace := flag.String("namespace", "", "Nomad Namespace to check System Jobs in. Blank for all namespaces")
 	failTimeout := flag.Int("failHc", defaultFailTimeout, "Pause between DaemonSet health checks if previous failed, sec")
 	passTimeout := flag.Int("passHc", defaultPassTimeout, "Pause between DaemonSet health checks if previous succeeded, sec")
 
@@ -51,7 +50,6 @@ func Parse() Config {
 	config := Config{
 		*host,
 		*port,
-		*baseUrl,
 		*namespace,
 		time.Duration(*failTimeout) * time.Second,
 		time.Duration(*passTimeout) * time.Second,
@@ -67,7 +65,6 @@ func Parse() Config {
 type Config struct {
 	Host              string
 	Port              int
-	K8sApiBaseUrl     string
 	Namespace         string
 	HealthFailTimeout time.Duration
 	HealthPassTimeout time.Duration

@@ -166,7 +166,5 @@ func isAllocationReady(allocation *api.AllocationListStub) bool {
 }
 
 func isAllocationOwnedByJob(allocation *api.AllocationListStub, job *api.JobListStub) bool {
-	log.Printf(" %s == '%s') ", allocation.JobID, job.ID)
-
 	return allocation.JobID == job.ID
 }
