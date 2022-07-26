@@ -73,9 +73,6 @@ func (h *HealthChecker) check() bool {
 		log.Printf("No allocations found running in : '%v'", h.node.Name)
 		return true
 	}
-	// for _, na := range nodeAllocations {
-	// 	log.Print(na.JobID)
-	// }
 
 	return h.checkAllSystemJobsAllocationsAvailableOnNode(systemJobs, nodeAllocations)
 }
@@ -144,10 +141,6 @@ func findSystemJobAllocations(systemJob *api.JobListStub, allocations []*api.All
 }
 
 func isAllocationReady(allocation *api.AllocationListStub) bool {
-	// if allocation.DeploymentStatus.Healthy == nil || *allocation.DeploymentStatus.Healthy == false {
-	// 	log.Printf(" %s('%v') Allocation Not Healthy", allocation.JobID, allocation.Name)
-	// 	return false
-	// }
 
 	for _, taskState := range allocation.TaskStates {
 		if taskState.Failed {
@@ -157,12 +150,6 @@ func isAllocationReady(allocation *api.AllocationListStub) bool {
 	}
 	return true
 
-	// for _, cond := range allocation.Status.Conditions {
-	// 	if cond.Type == "Ready" && cond.Status == "True" {
-	// 		log.Printf("'%v' Pod: Ready", allocation.Name)
-	// 		return true
-	// 	}
-	// }
 }
 
 func isAllocationOwnedByJob(allocation *api.AllocationListStub, job *api.JobListStub) bool {
