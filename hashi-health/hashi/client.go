@@ -53,7 +53,18 @@ func (c *Client) GetNodeInfo(nodeId string) *api.Node {
 func (c *Client) GetSystemJobs(namespace string) []*api.JobListStub {
 	systemJobList := (*RetryOrPanicDefault(func() (interface{}, error) {
 		joblist, _, err := c.nomadClient.Jobs().List(&api.QueryOptions{Namespace: namespace, Filter: `Type == "system"`})
-		return joblist, err
+		if err != nil {
+			return nil, err
+		}
+		// Workarround for old nomads.
+		var jl []*api.JobListStub
+		for _, job := range joblist {
+			//log.Printf("Nomad Job Name: %s Nomad type: %s ", job.Name, job.Type)
+			if job.Type == "system" {
+				jl = append(jl, job)
+			}
+		}
+		return jl, nil
 	})).([]*api.JobListStub)
 	return systemJobList
 }
@@ -62,7 +73,18 @@ func (c *Client) GetNodeAllocations(nodeId string) []*api.AllocationListStub {
 
 	allocationList := (*RetryOrPanicDefault(func() (interface{}, error) {
 		allocations, _, err := c.nomadClient.Allocations().List(&api.QueryOptions{Filter: `NodeID == "` + nodeId + `"`})
-		return allocations, err
+		if err != nil {
+			return nil, err
+		}
+
+		// Workarround for old nomads.
+		var jl []*api.AllocationListStub
+		for _, job := range allocations {
+			if job.NodeID == nodeId {
+				jl = append(jl, job)
+			}
+		}
+		return jl, nil
 	})).([]*api.AllocationListStub)
 	return allocationList
 }
