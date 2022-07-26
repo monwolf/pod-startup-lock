@@ -5,3 +5,5 @@ APP_NAME_INIT=init
 DOCKER_NAME_INIT=init
 APP_NAME_LOCK=lock
 DOCKER_NAME_LOCK=lock
+APP_NAME_HASHI=hashi-health
+DOCKER_NAME_HASHI=hashi-health
