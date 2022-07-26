@@ -52,7 +52,7 @@ func (c *Client) GetNodeInfo(nodeId string) *api.Node {
 
 func (c *Client) GetSystemJobs(namespace string) []*api.JobListStub {
 	systemJobList := (*RetryOrPanicDefault(func() (interface{}, error) {
-		joblist, _, err := c.nomadClient.Jobs().List(&api.QueryOptions{Namespace: namespace, Filter: `Type== "system"`})
+		joblist, _, err := c.nomadClient.Jobs().List(&api.QueryOptions{Namespace: namespace, Filter: `Type == "system"`})
 		return joblist, err
 	})).([]*api.JobListStub)
 	return systemJobList
@@ -60,9 +60,9 @@ func (c *Client) GetSystemJobs(namespace string) []*api.JobListStub {
 
 func (c *Client) GetNodeAllocations(nodeId string) []*api.AllocationListStub {
 
-	podList := (*RetryOrPanicDefault(func() (interface{}, error) {
+	allocationList := (*RetryOrPanicDefault(func() (interface{}, error) {
 		allocations, _, err := c.nomadClient.Allocations().List(&api.QueryOptions{Filter: `NodeID == "` + nodeId + `"`})
 		return allocations, err
 	})).([]*api.AllocationListStub)
-	return podList
+	return allocationList
 }
