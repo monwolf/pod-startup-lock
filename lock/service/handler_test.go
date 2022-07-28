@@ -31,6 +31,24 @@ func TestAcquireIfFirst(t *testing.T) {
 	// THEN
 	assertResponseStatusCode(http.StatusOK, rr.Code, t)
 }
+func TestAcquireIncludeJobName(t *testing.T) {
+	// GIVEN
+	permitFunction := func() bool {
+		return true
+	}
+	lock := state.NewLock(1)
+	handler := NewLockHandler(lock, timeout, permitFunction)
+	req, _ := http.NewRequest("GET", "/", nil)
+	q := req.URL.Query()
+	q.Add("job_name", "axxx")
+	req.URL.RawQuery = q.Encode()
+
+	// WHEN
+	rr := prepareResponseRecorder(req, handler)
+
+	// THEN
+	assertResponseStatusCode(http.StatusOK, rr.Code, t)
+}
 
 func TestAcquireIfSecond(t *testing.T) {
 	// GIVEN

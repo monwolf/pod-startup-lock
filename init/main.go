@@ -8,11 +8,12 @@ package main
 import (
 	"flag"
 	"fmt"
-	"log"
-	"net/http"
-	"time"
 	"io"
 	"io/ioutil"
+	"log"
+	"net/http"
+	"os"
+	"time"
 )
 
 const defaultHost = "localhost"
@@ -26,12 +27,13 @@ const requestTimeout = 1 * time.Second
 func main() {
 	host := flag.String("host", defaultHost, "Lock service host")
 	port := flag.Int("port", defaultPort, "Lock service port")
+	jobName := flag.String("jobanme", getJobName(), "Job Name informed to lock service")
 	duration := flag.Int("duration", defaultTimeout, "Custom lock duration to request, sec")
 	pauseSec := flag.Int("pause", defaultPause, "Pause between lock attempts, sec")
 	flag.Parse()
 
 	pause := time.Duration(*pauseSec) * time.Second
-	url := fmt.Sprintf("http://%s:%v", *host, *port)
+	url := fmt.Sprintf("http://%s:%v?job_name=%s", *host, *port, *jobName)
 	if *duration > 0 {
 		url = fmt.Sprintf("%s?duration=%v", url, *duration)
 	}
@@ -49,6 +51,19 @@ func main() {
 		}
 		time.Sleep(pause)
 	}
+}
+
+func getJobName() string {
+
+	val, ok := os.LookupEnv("NOMAD_JOB_NAME")
+	if !ok {
+		hostname, err := os.Hostname()
+		if err != nil {
+			return ""
+		}
+		return hostname
+	}
+	return val
 }
 
 func acquireLock(client *http.Client, url string) bool {
