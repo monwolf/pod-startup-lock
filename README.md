@@ -99,6 +99,8 @@ make docker-build-full
 
 
 ## Release Notes
+* `1.0.4`
+    - Updated libraries, added support for nomad, add extra info when printing access logs in lock service. 
 * `1.0.1`
     - Added connection timeouts for http and tcp connections; Added keep-alive for http connections. 
 * `1.0.0`
