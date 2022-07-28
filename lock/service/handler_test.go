@@ -22,7 +22,7 @@ func TestAcquireIfFirst(t *testing.T) {
 		return true
 	}
 	lock := state.NewLock(1)
-	handler := NewLockHandler(lock, timeout, permitFunction)
+	handler := NewLockHandler(&lock, timeout, permitFunction)
 	req, _ := http.NewRequest("GET", "/", nil)
 
 	// WHEN
@@ -37,7 +37,7 @@ func TestAcquireIncludeJobName(t *testing.T) {
 		return true
 	}
 	lock := state.NewLock(1)
-	handler := NewLockHandler(lock, timeout, permitFunction)
+	handler := NewLockHandler(&lock, timeout, permitFunction)
 	req, _ := http.NewRequest("GET", "/", nil)
 	q := req.URL.Query()
 	q.Add("job_name", "axxx")
@@ -57,7 +57,7 @@ func TestAcquireIfSecond(t *testing.T) {
 	}
 
 	lock := state.NewLock(1)
-	handler := NewLockHandler(lock, timeout, permitFunction)
+	handler := NewLockHandler(&lock, timeout, permitFunction)
 	req, _ := http.NewRequest("GET", "/", nil)
 	prepareResponseRecorder(req, handler)
 
@@ -75,7 +75,7 @@ func TestAcquireIfWrongTimeoutRequested(t *testing.T) {
 	}
 
 	lock := state.NewLock(1)
-	handler := NewLockHandler(lock, timeout, permitFunction)
+	handler := NewLockHandler(&lock, timeout, permitFunction)
 	req, _ := http.NewRequest("GET", "/", nil)
 	q := req.URL.Query()
 	q.Add("duration", "a")
@@ -97,7 +97,7 @@ func TestAcquireIfZeroTimeoutRequested(t *testing.T) {
 	}
 
 	lock := state.NewLock(1)
-	handler := NewLockHandler(lock, timeout, permitFunction)
+	handler := NewLockHandler(&lock, timeout, permitFunction)
 	req, _ := http.NewRequest("GET", "/", nil)
 	q := req.URL.Query()
 	q.Add("duration", "0")
@@ -119,7 +119,7 @@ func TestAcquireIfDisabled(t *testing.T) {
 	}
 
 	lock := state.NewLock(1)
-	handler := NewLockHandler(lock, timeout, permitFunction)
+	handler := NewLockHandler(&lock, timeout, permitFunction)
 	req, _ := http.NewRequest("GET", "/", nil)
 
 	// WHEN

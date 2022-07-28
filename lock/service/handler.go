@@ -16,12 +16,12 @@ import (
 )
 
 type lockHandler struct {
-	lock            state.Lock
+	lock            *state.Lock
 	defaultTimeout  time.Duration
 	permitAcquiring func() bool
 }
 
-func NewLockHandler(lock state.Lock, defaultTimeout time.Duration, permitOperationChecker func() bool) http.Handler {
+func NewLockHandler(lock *state.Lock, defaultTimeout time.Duration, permitOperationChecker func() bool) http.Handler {
 	return &lockHandler{lock, defaultTimeout, permitOperationChecker}
 }
 
