@@ -35,7 +35,7 @@ func main() {
 	pause := time.Duration(*pauseSec) * time.Second
 	url := fmt.Sprintf("http://%s:%v?job_name=%s", *host, *port, *jobName)
 	if *duration > 0 {
-		url = fmt.Sprintf("%s?duration=%v", url, *duration)
+		url = fmt.Sprintf("%s&duration=%v", url, *duration)
 	}
 	log.Printf("Will try to acquire lock at '%s' each '%v' sec", url, *pauseSec)
 
