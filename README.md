@@ -1,6 +1,6 @@
 # Simple time-based lock service with HTTP interface.
 
-![Build Status](https://github.com/monwolf/pod-startup-lock/docs/actions/workflows/push.yml/badge.svg)
+![Build Status](https://github.com/monwolf/pod-startup-lock/actions/workflows/push.yml/badge.svg)
 
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/serhii-samoilenko/pod-startup-lock)](https://goreportcard.com/report/github.com/monwolf/pod-startup-lock)
