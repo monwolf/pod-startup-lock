@@ -29,3 +29,4 @@ Gopkg.lock
 bin
 pkg
 vendor
+hashi-health/hashi-health
