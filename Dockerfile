@@ -12,20 +12,24 @@ RUN cd hashi-health && go test -cover -v ./... &&	go build -a -o bin/hashi-healt
 
 FROM scratch as init
 WORKDIR /
+USER 1000
 COPY --from=builder /go/src/github.com/monwolf/pod-startup-lock/init/bin/init /init
 ENTRYPOINT ["./init"]
 
 FROM scratch as k8s-health
 WORKDIR /
+USER 1000
 COPY --from=builder /go/src/github.com/monwolf/pod-startup-lock/k8s-health/bin/k8s-health /k8s-health
 ENTRYPOINT ["./k8s-health"]
 
 FROM scratch as lock
 WORKDIR /
+USER 1000
 COPY --from=builder /go/src/github.com/monwolf/pod-startup-lock/lock/bin/lock /lock
 ENTRYPOINT ["./lock"]
 
 FROM scratch as hashi-health
 WORKDIR /
+USER 1000
 COPY --from=builder /go/src/github.com/monwolf/pod-startup-lock/hashi-health/bin/hashi-health /hashi-health
 ENTRYPOINT ["./hashi-health"]
